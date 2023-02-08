@@ -7,7 +7,7 @@ periodics:
     skip_cloning: true
   extra_refs:
   - base_ref: master
-    org: layered-products
+    org: cspi
     repo: amq-streams
   labels:
     ci-operator.openshift.io/cloud: aws
@@ -15,7 +15,7 @@ periodics:
     ci.openshift.io/generator: prowgen
     job-release: "4.13"
     pj-rehearse.openshift.io/can-be-rehearsed: "true"
-  name: periodic-ci-layered-products-amq-streams-master-smoke-tests
+  name: periodic-ci-cspi-amq-streams-master-smoke-tests
   spec:
     containers:
     - args:

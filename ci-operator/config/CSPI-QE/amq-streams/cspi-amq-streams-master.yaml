@@ -54,5 +54,5 @@ tests:
           cpu: 100m
 zz_generated_metadata:
   branch: master
-  org: layered-products
+  org: cspi
   repo: amq-streams
