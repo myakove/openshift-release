@@ -52,7 +52,3 @@ tests:
       resources:
         requests:
           cpu: 100m
-zz_generated_metadata:
-  branch: master
-  org: cspi
-  repo: amq-streams
