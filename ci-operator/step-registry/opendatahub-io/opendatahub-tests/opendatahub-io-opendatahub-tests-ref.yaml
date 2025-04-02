@@ -1,0 +1,14 @@
+ref:
+  as: opendatahub-io-opendatahub-tests
+  from: opendatahub-tests
+  commands: opendatahub-io-opendatahub-tests-commands.sh
+  resources:
+    requests:
+      cpu: 100m
+      memory: 200Mi
+  env:
+    - name: TEST_MARKER
+      default: smoke
+      documentation: Tests marker
+  documentation: >-
+    This step runs opendatahub-tests

@@ -463,6 +463,8 @@ supplementalCIImages:
     image: quay.io/kiali/kiali-cypress-tests:v1.65
   ci/kiali-cypress-tests:v1.73:
     image: quay.io/kiali/kiali-cypress-tests:v1.73
+  ci/opendatahub-tests:latest:
+    image: quay.io/opendatahub/opendatahub-tests:latest
   coreos/centos:centos7:
     image: quay.io/centos/centos:centos7
   coreos/centos8:8:
