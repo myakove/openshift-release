@@ -627,6 +627,7 @@ tests:
     - chain: openshift-upgrade-qe-test
     workflow: baremetal-lab-upi
 - as: baremetalds-ipi-ovn-dualstack-primaryv6-f999
+  cluster: build05
   cron: 8 8 29 2 *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -640,6 +641,7 @@ tests:
     - chain: openshift-upgrade-qe-test
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn
 - as: baremetalds-ipi-ovn-ipv4-fips-canary-f28
+  cluster: build05
   cron: 42 13 9 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -652,6 +654,7 @@ tests:
     - chain: openshift-upgrade-qe-test-canary
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn
 - as: baremetalds-ipi-ovn-ipv6-fips-f999
+  cluster: build05
   cron: 8 8 29 2 *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -666,8 +669,7 @@ tests:
     - chain: openshift-upgrade-qe-test
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn
 - as: baremetalds-ipi-ovn-lvms-f28
-  capabilities:
-  - intranet
+  cluster: build05
   cron: 26 14 6 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -696,8 +698,8 @@ tests:
     test:
     - chain: openshift-upgrade-qe-test
     workflow: baremetal-lab-agent-install-network-static
-- as: gcp-ipi-confidential-computing-fips-mini-perm-f28
-  cron: 23 18 6 * *
+- as: gcp-ipi-confidential-secureboot-fips-mini-perm-f28
+  cron: 28 15 19 * *
   steps:
     cluster_profile: gcp-qe
     env:
@@ -705,7 +707,7 @@ tests:
       GCP_INSTALL_USE_MINIMAL_PERMISSIONS: "yes"
     test:
     - chain: openshift-upgrade-qe-test
-    workflow: cucushift-installer-rehearse-gcp-ipi-confidential-computing
+    workflow: cucushift-installer-rehearse-gcp-ipi-secureboot-confidential-computing
 - as: gcp-ipi-disc-priv-oidc-fips-mini-perm-f28
   cron: 34 22 7 * *
   steps:
@@ -744,15 +746,6 @@ tests:
     test:
     - chain: openshift-upgrade-qe-test
     workflow: cucushift-installer-rehearse-gcp-ipi
-- as: gcp-ipi-secureboot-confidential-computing-mini-perm-f28
-  cron: 23 2 7 * *
-  steps:
-    cluster_profile: gcp-qe
-    env:
-      GCP_INSTALL_USE_MINIMAL_PERMISSIONS: "yes"
-    test:
-    - chain: openshift-upgrade-qe-test
-    workflow: cucushift-installer-rehearse-gcp-ipi-secureboot-confidential-computing
 - as: ibmcloud-ipi-disc-priv-f28
   cron: 16 17 25 * *
   steps:

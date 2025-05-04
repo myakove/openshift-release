@@ -328,8 +328,8 @@ tests:
     test:
     - ref: openshift-extended-test-longduration
     workflow: cucushift-installer-rehearse-aws-ipi
-- as: aws-ipi-f7-longduration-hive-sd-rosa
-  cron: 30 0 1,10,17,24 * *
+- as: aws-ipi-f9-longduration-hive-sd-rosa
+  cron: 9 17 8,20,29 * *
   steps:
     cluster_profile: aws-qe
     env:
@@ -2124,10 +2124,10 @@ tests:
     - chain: openshift-e2e-test-hypershift-qe-mgmt
     workflow: cucushift-installer-rehearse-baremetalds-assisted-hypershift-agent-mce-disconnected
 - as: baremetalds-hypershift-agent-mce-n1minor-guest-f28
-  capabilities:
-  - intranet
+  cluster: build05
   cron: 55 9 11 * *
   steps:
+    cluster_profile: equinix-ocp-metal-qe
     dependencies:
       NODEPOOL_RELEASE_IMAGE_LATEST: release:n1minor
     env:
@@ -2139,8 +2139,7 @@ tests:
     - chain: openshift-e2e-test-hypershift-qe
     workflow: cucushift-installer-rehearse-baremetalds-assisted-hypershift-agent-mce-guest
 - as: baremetalds-hypershift-agent-mce-n1minor-mgmt-f28
-  capabilities:
-  - intranet
+  cluster: build05
   cron: 21 19 30 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2153,6 +2152,7 @@ tests:
     - chain: openshift-e2e-test-hypershift-qe-mgmt
     workflow: cucushift-installer-rehearse-baremetalds-assisted-hypershift-agent-mce
 - as: baremetalds-ipi-ovn-kubevirt-hypershift-mce-n1minor-mgmt-f28
+  cluster: build05
   cron: 56 18 13 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2166,6 +2166,7 @@ tests:
     - chain: openshift-e2e-test-hypershift-qe-mgmt
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn-ipv4-kubevirt-hypershift-mce
 - as: baremetalds-ipi-ovn-kubevirt-hypershift-mce-n1minor-guest-f28
+  cluster: build05
   cron: 12 14 29 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2181,6 +2182,8 @@ tests:
     - chain: openshift-e2e-test-hypershift-qe
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn-ipv4-kubevirt-hypershift-mce-guest
 - as: baremetal-3-plus-1-agent-ipv4-static-f14
+  capabilities:
+  - intranet
   cron: 32 15 11,27 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2192,7 +2195,8 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-network-static-3-plus-1
 - as: baremetal-compact-agent-platform-none-ipv4-static-f14
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 15 19 11,27 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2208,7 +2212,8 @@ tests:
       workers: "0"
     workflow: baremetal-lab-agent-install-network-static
 - as: baremetal-ha-agent-ipv4-static-disc-fips-f7
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 29 13 3,10,19,26 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2227,7 +2232,8 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-network-static-disconnected
 - as: baremetal-ha-agent-platform-none-ipv4-static-f14
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 24 15 2,16 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2243,7 +2249,8 @@ tests:
       workers: "2"
     workflow: baremetal-lab-agent-install-network-static
 - as: baremetal-sno-agent-ipv4-static-fips-day2-f14
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 59 16 3,17 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2263,7 +2270,8 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-network-static-day2
 - as: baremetal-ha-agent-ipv4-static-disc-day2-f14
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 23 21 11,27 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2283,7 +2291,7 @@ tests:
     test:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-network-static-disconnected-day2
-- as: baremetal-ipi-ovn-lvms-f14
+- as: baremetalds-ipi-ovn-lvms-f14
   cluster: build05
   cron: 10 14 5,21 * *
   steps:
@@ -2297,7 +2305,8 @@ tests:
     - ref: openshift-extended-test
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn-lvms
 - as: baremetal-pxe-compact-agent-ipv4-static-connected-f14
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 31 19 9,25 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2313,7 +2322,8 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-pxe
 - as: baremetal-pxe-ha-agent-ipv4-static-connected-f14
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 22 13 3,19 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2329,7 +2339,8 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-pxe
 - as: baremetal-pxe-sno-agent-ipv4-static-connected-f14
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 52 16 12,26 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2346,7 +2357,8 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-pxe
 - as: baremetal-sno-agent-ipv4-static-connected-fips-f7
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 11 19 6,15,22,29 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2364,7 +2376,8 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-network-static
 - as: baremetal-sno-agent-ipv6-dynamic-fips-f14
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 34 18 8,22 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2380,7 +2393,8 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-network-dynamic-ipv6
 - as: baremetal-sno-agent-ipv6-dynamic-f14
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 48 20 11,27 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2395,7 +2409,8 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-network-dynamic-ipv6
 - as: baremetal-compact-agent-ipv6-dynamic-f14
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 24 16 4,18 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2409,7 +2424,8 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-network-dynamic-ipv6
 - as: baremetal-ha-agent-ipv6-dynamic-f14
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 6 18 10,26 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2423,7 +2439,8 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-network-dynamic-ipv6
 - as: baremetal-ha-agent-dualstack-dynamic-fips-f14
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 35 21 10,24 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2442,7 +2459,8 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-network-dynamic
 - as: baremetal-sno-agent-dualstack-dynamic-f14
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 15 13 2,16 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2461,7 +2479,8 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-network-dynamic
 - as: baremetal-compact-agent-dualstack-dynamic-disc-fips-f7
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 52 14 2,9,16,25 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2481,7 +2500,8 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-agent-install-network-dynamic-disconnected
 - as: baremetal-upi-ovn-ipv4-f14
-  cluster: build05
+  capabilities:
+  - intranet
   cron: 12 19 3,19 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2494,6 +2514,7 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: baremetal-lab-upi
 - as: baremetalds-ipi-ovn-dualstack-primaryv6-f28-destructive
+  cluster: build05
   cron: 14 22 23 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2507,6 +2528,7 @@ tests:
     - chain: openshift-e2e-test-qe-destructive
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn
 - as: baremetalds-ipi-ovn-dualstack-primaryv6-f7
+  cluster: build05
   cron: 44 4 2,9,16,23 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2520,6 +2542,7 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn
 - as: baremetalds-ipi-ovn-ipv4-fips-f14
+  cluster: build05
   cron: 59 7 13,27 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2532,6 +2555,7 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn
 - as: baremetalds-ipi-ovn-ipv4-fips-f14-ui
+  cluster: build05
   cron: 14 10 9,25 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2544,6 +2568,7 @@ tests:
     - chain: openshift-e2e-test-qe-ui
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn
 - as: baremetalds-ipi-ovn-ipv4-fips-f14-wrs
+  cluster: build05
   cron: 42 8 14,28 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2561,6 +2586,7 @@ tests:
     - chain: openshift-e2e-test-qe-automated-release
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn
 - as: baremetalds-ipi-ovn-ipv4-fips-f28-destructive
+  cluster: build05
   cron: 22 5 6 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2573,6 +2599,7 @@ tests:
     - chain: openshift-e2e-test-qe-destructive
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn
 - as: baremetalds-ipi-ovn-ipv6-fips-f14
+  cluster: build05
   cron: 49 8 7,21 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2587,6 +2614,7 @@ tests:
     - chain: openshift-e2e-test-qe
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn
 - as: baremetalds-ipi-ovn-ipv6-fips-f28-destructive
+  cluster: build05
   cron: 7 21 25 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2601,6 +2629,7 @@ tests:
     - chain: openshift-e2e-test-qe-destructive
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn
 - as: baremetalds-ipi-ovn-f14-longrun-mco-p1
+  cluster: build05
   cron: 0 6 12,26 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2612,6 +2641,7 @@ tests:
     - chain: openshift-e2e-test-mco-qe-longrun
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn
 - as: baremetalds-ipi-ovn-f14-longrun-mco-p2
+  cluster: build05
   cron: 26 23 5,21 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2623,6 +2653,7 @@ tests:
     - chain: openshift-e2e-test-mco-qe-longrun
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn
 - as: baremetalds-ipi-ovn-f14-longrun-mco-p3
+  cluster: build05
   cron: 3 23 6,20 * *
   steps:
     cluster_profile: equinix-ocp-metal-qe
@@ -2633,8 +2664,8 @@ tests:
     test:
     - chain: openshift-e2e-test-mco-qe-longrun
     workflow: cucushift-installer-rehearse-baremetalds-ipi-ovn
-- as: gcp-ipi-confidential-computing-fips-mini-perm-f28-destructive
-  cron: 3 9 7 * *
+- as: gcp-ipi-confidential-fips-mini-perm-f28-destructive
+  cron: 48 23 12 * *
   steps:
     cluster_profile: gcp-qe
     env:
@@ -2643,6 +2674,15 @@ tests:
     test:
     - chain: openshift-e2e-test-qe-destructive
     workflow: cucushift-installer-rehearse-gcp-ipi-confidential-computing
+- as: gcp-ipi-confidential-secureboot-mini-perm-f14
+  cron: 23 2 13,27 * *
+  steps:
+    cluster_profile: gcp-qe
+    env:
+      GCP_INSTALL_USE_MINIMAL_PERMISSIONS: "yes"
+    test:
+    - chain: openshift-e2e-test-qe
+    workflow: cucushift-installer-rehearse-gcp-ipi-secureboot-confidential-computing
 - as: gcp-ipi-disc-priv-oidc-fips-mini-perm-f28
   cron: 27 6 7 * *
   steps:
@@ -2840,24 +2880,6 @@ tests:
     test:
     - ref: openshift-extended-test
     workflow: cucushift-installer-rehearse-gcp-ipi-ovn-winc
-- as: gcp-ipi-secureboot-confidential-computing-mini-perm-f14
-  cron: 7 23 3,17 * *
-  steps:
-    cluster_profile: gcp-qe
-    env:
-      GCP_INSTALL_USE_MINIMAL_PERMISSIONS: "yes"
-    test:
-    - chain: openshift-e2e-test-qe
-    workflow: cucushift-installer-rehearse-gcp-ipi-secureboot-confidential-computing
-- as: gcp-ipi-secureboot-mini-perm-f28-destructive
-  cron: 30 16 15 * *
-  steps:
-    cluster_profile: gcp-qe
-    env:
-      GCP_INSTALL_USE_MINIMAL_PERMISSIONS: "yes"
-    test:
-    - chain: openshift-e2e-test-qe-destructive
-    workflow: cucushift-installer-rehearse-gcp-ipi-secureboot
 - as: gcp-ipi-to-multiarch-mini-perm-f14
   cron: 50 23 13,27 * *
   steps:
@@ -3538,6 +3560,9 @@ tests:
   cron: 15 22 3,10,17,26 * *
   steps:
     cluster_profile: vsphere-elastic
+    env:
+      CYPRESS_NOO_CS_IMAGE: quay.io/redhat-user-workloads/ocp-network-observab-tenant/network-observability-operator-fbc-ystream:latest
+      NETOBSERV_CS_IMAGE: quay.io/redhat-user-workloads/ocp-network-observab-tenant/network-observability-operator-fbc-ystream:latest
     test:
     - chain: openshift-e2e-test-netobserv-qe
     workflow: cucushift-installer-rehearse-vsphere-ipi

@@ -71,6 +71,9 @@ chain:
       default: "false"
       documentation: |-
         If true, enable ETCD encryption by specifying --kms-key-arn="$(cat "${SHARED_DIR}/aws_kms_key_arn")".
+    - name: HYPERSHIFT_AUTONODE
+      default: "false"
+      documentation: "If set to true, it sets the --auto-node flag to true"
     commands: |-
       set -exuo pipefail
       AWS_GUEST_INFRA_CREDENTIALS_FILE="/etc/hypershift-ci-jobs-awscreds/credentials"
@@ -107,7 +110,8 @@ chain:
         --aws-creds=${AWS_GUEST_INFRA_CREDENTIALS_FILE}
         --release-image ${RELEASE_IMAGE}
         --annotations=hypershift.openshift.io/skip-release-image-validation=true
-        --additional-tags="expirationDate=$(date -d '4 hours' --iso=minutes --utc)" 
+        --additional-tags="expirationDate=$(date -d '4 hours' --iso=minutes --utc)"
+        --auto-node=${HYPERSHIFT_AUTONODE}
       )
       
       if [[ $HYPERSHIFT_SHARED_VPC == "true" ]]; then
@@ -169,20 +173,27 @@ chain:
       # In case of BYO CNI, the HC will never be ready before CNI components are up and running
       if [[ "$HYPERSHIFT_NETWORK_TYPE" == "Other" ]]; then
         echo "Waiting for nodes to join the hosted cluster"
-        num_nodes_expected=$(oc get np -A -o jsonpath='{.items[0].spec.replicas}')
-        export num_nodes_expected
-        export KUBECONFIG=${SHARED_DIR}/nested_kubeconfig
-        set +e
-        timeout 25m bash -c '
-          while true; do
-            num_nodes=$(oc get nodes --no-headers | wc -l)
-            if (( num_nodes == num_nodes_expected )); then
-              break
-            fi
-            echo "$num_nodes/$num_nodes_expected have joined the HC"
-            sleep 15s
-          done
-        '
+        if [[ "$ENDPOINT_ACCESS" == "Private" ]]; then
+          # With Private access the cluster is not yet accessible (the Proxy bastion
+          # node was not yet configured). Let's sleep for a little longer than the usual wait
+          # time for nodes to join.
+          sleep 300
+        else
+          num_nodes_expected=$(oc get np -A -o jsonpath='{.items[0].spec.replicas}')
+          export num_nodes_expected
+          export KUBECONFIG=${SHARED_DIR}/nested_kubeconfig
+          set +e
+          timeout 25m bash -c '
+            while true; do
+              num_nodes=$(oc get nodes --no-headers | wc -l)
+              if (( num_nodes == num_nodes_expected )); then
+                break
+              fi
+              echo "$num_nodes/$num_nodes_expected have joined the HC"
+              sleep 15s
+            done
+          '
+        fi
       else
         set +e
         export CLUSTER_NAME
